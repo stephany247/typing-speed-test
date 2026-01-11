@@ -1,6 +1,12 @@
+import type { Difficulty } from "../types/passage";
 import Dropdown from "./Dropdown";
 
-export default function Controls() {
+type ControlsProps = {
+  difficulty: Difficulty;
+  setDifficulty: (value: Difficulty) => void;
+};
+
+export default function Controls({ difficulty, setDifficulty }: ControlsProps) {
   return (
     <header className="flex flex-col gap-4 mt-8 border-b border-neutral-700 pb-4">
       <div className="grid grid-cols-3 items-center justify-center divide-x divide-neutral-700">
@@ -21,9 +27,17 @@ export default function Controls() {
       </div>
 
       <div className="flex justify-center items-center gap-4">
-        <Dropdown value="Hard" options={["Easy", "Medium", "Hard"]} />
+        <Dropdown
+          value={difficulty}
+          options={["Easy", "Medium", "Hard"]}
+          onSelect={(value) => setDifficulty(value.toLowerCase() as Difficulty)}
+        />
 
-        <Dropdown value="Timed (60s)" options={["Timed (60s)", "Passage"]} />
+        <Dropdown
+          value="Timed (60s)"
+          options={["Timed (60s)", "Passage"]}
+          onSelect={() => {}}
+        />
       </div>
     </header>
   );
