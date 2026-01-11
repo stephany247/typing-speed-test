@@ -14,6 +14,11 @@ const data = passagesData as PassageData;
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("hard");
   const [passage, setPassage] = useState<PassageType | null>(null);
+  const [restart, setRestart] = useState(0);
+
+  const restartTest = () => {
+    setRestart((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const passages = data[difficulty];
@@ -25,7 +30,7 @@ function App() {
     <>
       <Header />
       <Controls difficulty={difficulty} setDifficulty={setDifficulty} />
-      {passage && <Passage text={passage.text} />}
+      {passage && <Passage text={passage.text} onRestart={restartTest} />}
     </>
   );
 }
