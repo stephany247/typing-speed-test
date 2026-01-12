@@ -7,6 +7,7 @@ export function useTypingTest(text: string, mode: Mode) {
     const [timeLeft, setTimeLeft] = useState(60)
     const [typed, setTyped] = useState("")
     const [errors, setErrors] = useState<number[]>([])
+    const [elapsedTime, setElapsedTime] = useState(0)
 
     const startGame = () => {
         if (!hasStarted) setHasStarted(true)
@@ -15,6 +16,7 @@ export function useTypingTest(text: string, mode: Mode) {
     const resetGame = () => {
         setHasStarted(false)
         setTimeLeft(60)
+        setElapsedTime(0)
         setTyped("")
         setErrors([])
     }
@@ -30,7 +32,7 @@ export function useTypingTest(text: string, mode: Mode) {
             if (e.key.length !== 1 && e.key !== "Backspace") return
 
             if (!hasStarted) {
-                setHasStarted(true)
+                startGame()
             }
 
             if (e.key === "Backspace") {
@@ -57,6 +59,17 @@ export function useTypingTest(text: string, mode: Mode) {
         setErrors(newErrors)
     }, [typed, text])
 
+    useEffect(() => {
+        if (!hasStarted) return
+
+        const id = setInterval(() => {
+            setElapsedTime(prev => prev + 1)
+        }, 1000)
+
+        return () => clearInterval(id)
+    }, [hasStarted])
+
+
     return {
         hasStarted,
         timeLeft,
@@ -64,5 +77,6 @@ export function useTypingTest(text: string, mode: Mode) {
         errors,
         startGame,
         resetGame,
+        elapsedTime,
     }
 }

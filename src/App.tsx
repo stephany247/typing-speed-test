@@ -9,6 +9,7 @@ import type {
 import Passage from "./components/Passage";
 import passagesData from "./data/data.json";
 import { useTypingTest } from "./hooks/useTypingTest";
+import { calculateStats } from "./utils/calculateStats";
 
 const data = passagesData as PassageData;
 
@@ -16,12 +17,14 @@ function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("hard");
   const [passage, setPassage] = useState<PassageType | null>(null);
   // const [restart, setRestart] = useState(0);
-  const text = passage?.text
-  const { hasStarted, typed, errors, startGame, resetGame } = useTypingTest(
-    text ?? "",
-    "timed"
-  );
-
+  const text = passage?.text;
+  const { hasStarted, typed, errors, startGame, resetGame, elapsedTime } =
+    useTypingTest(text ?? "", "timed");
+  const stats = calculateStats({
+    typed,
+    errors,
+    elapsedTime,
+  });
 
   useEffect(() => {
     const passages = data[difficulty];
@@ -32,7 +35,13 @@ function App() {
   return (
     <>
       <Header />
-      <Controls difficulty={difficulty} setDifficulty={setDifficulty} />
+      <Controls
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+        wpm={stats.wpm}
+        accuracy={stats.accuracy}
+        time={elapsedTime}
+      />
       {passage && (
         // <Passage
         //   text={passage.text}
