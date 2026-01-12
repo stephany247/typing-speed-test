@@ -15,6 +15,7 @@ function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("hard");
   const [passage, setPassage] = useState<PassageType | null>(null);
   const [restart, setRestart] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
 
   const restartTest = () => {
     setRestart((prev) => prev + 1);
@@ -24,13 +25,20 @@ function App() {
     const passages = data[difficulty];
     const random = passages[Math.floor(Math.random() * passages.length)];
     setPassage(random);
-  }, [difficulty]);
+    setHasStarted(false);
+  }, [difficulty, restart]);
 
   return (
     <>
       <Header />
       <Controls difficulty={difficulty} setDifficulty={setDifficulty} />
-      {passage && <Passage text={passage.text} onRestart={restartTest} />}
+      {passage && (
+        <Passage
+          text={passage.text}
+          onRestart={restartTest}
+          hasStarted={hasStarted}
+        />
+      )}
     </>
   );
 }
