@@ -8,35 +8,44 @@ import type {
 } from "./types/passage";
 import Passage from "./components/Passage";
 import passagesData from "./data/data.json";
+import { useTypingTest } from "./hooks/useTypingTest";
 
 const data = passagesData as PassageData;
 
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("hard");
   const [passage, setPassage] = useState<PassageType | null>(null);
-  const [restart, setRestart] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
+  // const [restart, setRestart] = useState(0);
+  const text = passage?.text
+  const { hasStarted, typed, errors, startGame, resetGame } = useTypingTest(
+    text ?? "",
+    "timed"
+  );
 
-  const restartTest = () => {
-    setRestart((prev) => prev + 1);
-  };
 
   useEffect(() => {
     const passages = data[difficulty];
     const random = passages[Math.floor(Math.random() * passages.length)];
     setPassage(random);
-    setHasStarted(false);
-  }, [difficulty, restart]);
+  }, [difficulty]);
 
   return (
     <>
       <Header />
       <Controls difficulty={difficulty} setDifficulty={setDifficulty} />
       {passage && (
+        // <Passage
+        //   text={passage.text}
+        //   onRestart={restartTest}
+        //   hasStarted={hasStarted}
+        // />
         <Passage
           text={passage.text}
-          onRestart={restartTest}
           hasStarted={hasStarted}
+          typed={typed}
+          errors={errors}
+          onStart={startGame}
+          onRestart={resetGame}
         />
       )}
     </>
