@@ -7,7 +7,7 @@ type PassageProps = {
 export default function Passage({ text, onRestart, hasStarted }: PassageProps) {
   return (
     <div className="mt-8 relative">
-      <div className="my-8 rounded-lg bg-neutral-800 p-6 leading-relaxed max-h-100 overflow-y-auto">
+      <div className="my-8 rounded-lg bg-neutral-800 p-6 leading-relaxed max-h-140 overflow-y-auto">
         <p className="text-3xl tracking-[0.4px] leading-[136%]">{text}</p>
       </div>
 

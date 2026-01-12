@@ -29,7 +29,7 @@ export default function Controls({ difficulty, setDifficulty }: ControlsProps) {
       <div className="flex justify-center items-center gap-4">
         <Dropdown
           value={difficulty}
-          options={["Easy", "Medium", "Hard"]}
+          options={["easy", "medium", "hard"]}
           onSelect={(value) => setDifficulty(value.toLowerCase() as Difficulty)}
         />
 
