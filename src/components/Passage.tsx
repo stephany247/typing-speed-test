@@ -61,7 +61,7 @@ export default function Passage({
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center backdrop-blur-sm">
           <button
             onClick={onStart}
-            className="px-4 py-2.5 bg-blue-600 rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2]"
+            className="px-4 py-2.5 bg-blue-600 transition-colors duration-200 ease-in-out rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2] cursor-pointer focus:outline-1 focus:outline-offset-2 focus:outline-blue-400 hover:border-blue-400"
           >
             Start Typing Test
           </button>

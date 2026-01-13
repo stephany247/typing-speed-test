@@ -109,5 +109,6 @@ export function useTypingTest(text: string, config: Config) {
         startGame,
         resetGame,
         elapsedTime,
+        isTesting,
     }
 }

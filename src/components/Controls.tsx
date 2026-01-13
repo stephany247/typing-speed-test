@@ -13,6 +13,7 @@ type ControlsProps = {
   modeConfig: ModeConfig;
   setModeConfig: (config: ModeConfig) => void;
   onReset: () => void;
+  isTesting: boolean;
 };
 
 export default function Controls({
@@ -24,6 +25,7 @@ export default function Controls({
   modeConfig,
   setModeConfig,
   onReset,
+  isTesting,
 }: ControlsProps) {
   return (
     <header className="flex flex-col gap-4 mt-8 border-b border-neutral-700 pb-4 lg:flex-row lg:justify-between">
@@ -35,12 +37,22 @@ export default function Controls({
 
         <div className="flex flex-col items-center md:flex-row md:gap-4 md:px-6">
           <p className="text-neutral-400 md:text-lg">Accuracy:</p>
-          <p className="text-xl font-semibold md:text-2xl">{accuracy}%</p>
+          <p
+            className={`text-xl font-semibold md:text-2xl ${
+              accuracy < 100 ? "text-red-500" : "text-neutral-0"
+            }`}
+          >
+            {accuracy}%
+          </p>
         </div>
 
         <div className="flex flex-col items-center md:flex-row md:gap-4 md:pl-6">
           <p className="text-neutral-400 md:text-lg">Time:</p>
-          <p className="text-xl font-semibold md:text-2xl">
+          <p
+            className={`text-xl font-semibold md:text-2xl transition-colors duration-200 ease-in-out ${
+              isTesting ? "text-yellow-400" : "text-neutral-0"
+            }`}
+          >
             {Math.floor(time / 60)}:{String(time % 60).padStart(2, "0")}
           </p>
         </div>
@@ -62,7 +74,7 @@ export default function Controls({
           <OptionGroup
             value={
               modeConfig.mode === "timed"
-                ?`${modeConfig.duration}s`
+                ? `${modeConfig.duration}s`
                 : "Passage"
             }
             options={MODE_OPTIONS.map((o) => o.mdLabel)}

@@ -24,10 +24,17 @@ function App() {
     duration: 60,
   });
 
-  // const [restart, setRestart] = useState(0);
   const text = passage?.text;
-  const { hasStarted, typed, errors, startGame, resetGame, elapsedTime, timeLeft } =
-    useTypingTest(text ?? "", modeConfig);
+  const {
+    hasStarted,
+    typed,
+    errors,
+    startGame,
+    resetGame,
+    elapsedTime,
+    timeLeft,
+    isTesting,
+  } = useTypingTest(text ?? "", modeConfig);
   const stats = calculateStats({
     typed,
     errors,
@@ -40,9 +47,7 @@ function App() {
     setPassage(random);
   }, [difficulty]);
 
-  const displayTime =
-  modeConfig.mode === "timed" ? timeLeft : elapsedTime
-
+  const displayTime = modeConfig.mode === "timed" ? timeLeft : elapsedTime;
 
   return (
     <>
@@ -56,6 +61,8 @@ function App() {
         modeConfig={modeConfig}
         setModeConfig={setModeConfig}
         onReset={resetGame}
+        isTesting=
+        {isTesting}
       />
       {passage && (
         <Passage
