@@ -10,6 +10,7 @@ import Passage from "./components/Passage";
 import passagesData from "./data/data.json";
 import { useTypingTest } from "./hooks/useTypingTest";
 import { calculateStats } from "./utils/calculateStats";
+import Results from "./components/Results";
 
 const data = passagesData as PassageData;
 export type ModeConfig =
@@ -48,6 +49,15 @@ function App() {
   }, [difficulty]);
 
   const displayTime = modeConfig.mode === "timed" ? timeLeft : elapsedTime;
+  // const isFinished =
+  //   (modeConfig.mode === "timed" && timeLeft === 0) ||
+  //   (modeConfig.mode === "passage" &&
+  //     typed.length > 0 &&
+  //     typed.length === passage?.text.length);
+
+  const isFinished =
+    timeLeft === 0 ||
+    (typed.length > 0 && typed.length === passage?.text.length);
 
   return (
     <>
@@ -61,16 +71,27 @@ function App() {
         modeConfig={modeConfig}
         setModeConfig={setModeConfig}
         onReset={resetGame}
-        isTesting=
-        {isTesting}
+        isTesting={isTesting}
       />
-      {passage && (
+      {passage && !isFinished && (
         <Passage
           text={passage.text}
           hasStarted={hasStarted}
           typed={typed}
           errors={errors}
           onStart={startGame}
+          onRestart={resetGame}
+        />
+      )}
+
+      {isFinished && (
+        <Results
+          wpm={stats.wpm}
+          accuracy={stats.accuracy}
+          characters={typed.length}
+          totalTyped={typed.length}
+          errorCount={errors.length}
+          bestWpm={92} // placeholder for now
           onRestart={resetGame}
         />
       )}
