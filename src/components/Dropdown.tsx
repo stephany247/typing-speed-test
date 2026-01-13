@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type DropdownProps = {
   value: string;
@@ -8,16 +8,37 @@ type DropdownProps = {
 
 export default function Dropdown({ value, options, onSelect }: DropdownProps) {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="relative text-sm w-full">
+    <div ref={dropdownRef} className="relative text-sm w-full">
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         className="flex items-center justify-center gap-2.5 border border-neutral-500 px-3 py-2 rounded-lg text-neutral-0 w-full capitalize"
       >
         {value}
-        <img src="/images/icon-down-arrow.svg" alt="" />
+        <img
+          src="/images/icon-down-arrow.svg"
+          alt="indicator arrow"
+          className={`transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
       </button>
 
       {open && (

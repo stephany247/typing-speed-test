@@ -12,6 +12,7 @@ export function useTypingTest(text: string, config: Config) {
     const [timeLeft, setTimeLeft] = useState(
         config.mode === "timed" ? config.duration : 0
     )
+    const [isTesting, setIsTesting] = useState(false);
 
     const startGame = () => {
         if (!hasStarted) setHasStarted(true)
@@ -19,6 +20,7 @@ export function useTypingTest(text: string, config: Config) {
 
     const resetGame = () => {
         setHasStarted(false)
+        setIsTesting(false);
         setElapsedTime(0)
         setTyped("")
         setErrors([])
@@ -29,7 +31,7 @@ export function useTypingTest(text: string, config: Config) {
         }
     }
 
-    // typing logic  F
+    // typing logic F
     useEffect(() => {
         if (!hasStarted) return
 
@@ -40,8 +42,8 @@ export function useTypingTest(text: string, config: Config) {
 
             if (e.key.length !== 1 && e.key !== "Backspace") return
 
-            if (!hasStarted) {
-                startGame()
+            if (!isTesting) {
+                setIsTesting(true);
             }
 
             if (e.key === "Backspace") {
@@ -54,7 +56,7 @@ export function useTypingTest(text: string, config: Config) {
 
         window.addEventListener("keydown", handleKeyDown)
         return () => window.removeEventListener("keydown", handleKeyDown)
-    }, [hasStarted])
+    }, [hasStarted, isTesting])
 
     // error calculation logic
     useEffect(() => {
@@ -71,7 +73,7 @@ export function useTypingTest(text: string, config: Config) {
 
     // timer logic
     useEffect(() => {
-        if (!hasStarted) return
+        if (!isTesting) return
 
         const id = setInterval(() => {
             if (config.mode === "timed") {
@@ -79,6 +81,7 @@ export function useTypingTest(text: string, config: Config) {
                     if (prev <= 1) {
                         clearInterval(id)
                         setHasStarted(false)
+                        setIsTesting(false)
                         return 0
                     }
                     return prev - 1
@@ -90,12 +93,12 @@ export function useTypingTest(text: string, config: Config) {
         }, 1000)
 
         return () => clearInterval(id)
-    }, [hasStarted, config])
+    }, [isTesting, config])
 
-  // sync when mode changes
-  useEffect(() => {
-    setTimeLeft(config.mode === "timed" ? config.duration : 0)
-  }, [config])
+    // sync when mode changes
+    useEffect(() => {
+        setTimeLeft(config.mode === "timed" ? config.duration : 0)
+    }, [config])
 
 
     return {
