@@ -12,14 +12,22 @@ import { useTypingTest } from "./hooks/useTypingTest";
 import { calculateStats } from "./utils/calculateStats";
 
 const data = passagesData as PassageData;
+export type ModeConfig =
+  | { mode: "timed"; duration: number }
+  | { mode: "passage" };
 
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("hard");
   const [passage, setPassage] = useState<PassageType | null>(null);
+  const [modeConfig, setModeConfig] = useState<ModeConfig>({
+    mode: "timed",
+    duration: 60,
+  });
+
   // const [restart, setRestart] = useState(0);
   const text = passage?.text;
-  const { hasStarted, typed, errors, startGame, resetGame, elapsedTime } =
-    useTypingTest(text ?? "", "timed");
+  const { hasStarted, typed, errors, startGame, resetGame, elapsedTime, timeLeft } =
+    useTypingTest(text ?? "", modeConfig);
   const stats = calculateStats({
     typed,
     errors,
@@ -32,6 +40,10 @@ function App() {
     setPassage(random);
   }, [difficulty]);
 
+  const displayTime =
+  modeConfig.mode === "timed" ? timeLeft : elapsedTime
+
+
   return (
     <>
       <Header />
@@ -40,14 +52,12 @@ function App() {
         setDifficulty={setDifficulty}
         wpm={stats.wpm}
         accuracy={stats.accuracy}
-        time={elapsedTime}
+        time={displayTime}
+        modeConfig={modeConfig}
+        setModeConfig={setModeConfig}
+        onReset={resetGame}
       />
       {passage && (
-        // <Passage
-        //   text={passage.text}
-        //   onRestart={restartTest}
-        //   hasStarted={hasStarted}
-        // />
         <Passage
           text={passage.text}
           hasStarted={hasStarted}

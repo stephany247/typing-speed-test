@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react"
 
-type Mode = "timed" | "passage"
+type Config =
+    | { mode: "timed"; duration: number }
+    | { mode: "passage" }
 
-export function useTypingTest(text: string, mode: Mode) {
+export function useTypingTest(text: string, config: Config) {
     const [hasStarted, setHasStarted] = useState(false)
-    const [timeLeft, setTimeLeft] = useState(60)
     const [typed, setTyped] = useState("")
     const [errors, setErrors] = useState<number[]>([])
     const [elapsedTime, setElapsedTime] = useState(0)
+    const [timeLeft, setTimeLeft] = useState(
+        config.mode === "timed" ? config.duration : 0
+    )
 
     const startGame = () => {
         if (!hasStarted) setHasStarted(true)
@@ -15,12 +19,17 @@ export function useTypingTest(text: string, mode: Mode) {
 
     const resetGame = () => {
         setHasStarted(false)
-        setTimeLeft(60)
         setElapsedTime(0)
         setTyped("")
         setErrors([])
+        if (config.mode === "timed") {
+            setTimeLeft(config.duration)
+        } else {
+            setTimeLeft(0)
+        }
     }
 
+    // typing logic  F
     useEffect(() => {
         if (!hasStarted) return
 
@@ -47,6 +56,7 @@ export function useTypingTest(text: string, mode: Mode) {
         return () => window.removeEventListener("keydown", handleKeyDown)
     }, [hasStarted])
 
+    // error calculation logic
     useEffect(() => {
         const newErrors: number[] = []
 
@@ -59,15 +69,33 @@ export function useTypingTest(text: string, mode: Mode) {
         setErrors(newErrors)
     }, [typed, text])
 
+    // timer logic
     useEffect(() => {
         if (!hasStarted) return
 
         const id = setInterval(() => {
-            setElapsedTime(prev => prev + 1)
+            if (config.mode === "timed") {
+                setTimeLeft(prev => {
+                    if (prev <= 1) {
+                        clearInterval(id)
+                        setHasStarted(false)
+                        return 0
+                    }
+                    return prev - 1
+                })
+                setElapsedTime(prev => prev + 1)
+            } else {
+                setElapsedTime(prev => prev + 1)
+            }
         }, 1000)
 
         return () => clearInterval(id)
-    }, [hasStarted])
+    }, [hasStarted, config])
+
+  // sync when mode changes
+  useEffect(() => {
+    setTimeLeft(config.mode === "timed" ? config.duration : 0)
+  }, [config])
 
 
     return {

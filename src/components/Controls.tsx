@@ -1,3 +1,5 @@
+import type { ModeConfig } from "../App";
+import { MODE_OPTIONS } from "../data/modes";
 import type { Difficulty } from "../types/passage";
 import Dropdown from "./Dropdown";
 
@@ -7,6 +9,9 @@ type ControlsProps = {
   wpm: number;
   accuracy: number;
   time: number;
+  modeConfig: ModeConfig;
+  setModeConfig: (config: ModeConfig) => void;
+  onReset: () => void;
 };
 
 export default function Controls({
@@ -15,6 +20,9 @@ export default function Controls({
   wpm,
   accuracy,
   time,
+  modeConfig,
+  setModeConfig,
+  onReset,
 }: ControlsProps) {
   return (
     <header className="flex flex-col gap-4 mt-8 border-b border-neutral-700 pb-4">
@@ -45,9 +53,24 @@ export default function Controls({
         />
 
         <Dropdown
-          value="Timed (60s)"
-          options={["Timed (60s)", "Passage"]}
-          onSelect={() => {}}
+          value={
+            modeConfig.mode === "timed"
+              ? `Timed (${modeConfig.duration}s)`
+              : "Passage"
+          }
+          options={MODE_OPTIONS.map((o) => o.label)}
+          onSelect={(label) => {
+            const selected = MODE_OPTIONS.find((o) => o.label === label);
+            if (!selected) return;
+
+            if (selected.mode === "timed") {
+              setModeConfig({ mode: "timed", duration: selected.duration });
+            } else {
+              setModeConfig({ mode: "passage" });
+            }
+
+            onReset();
+          }}
         />
       </div>
     </header>
