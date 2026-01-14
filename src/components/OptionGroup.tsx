@@ -20,7 +20,10 @@ export default function OptionGroup({
           <button
             key={option}
             type="button"
-            onClick={() => onSelect(option)}
+            onClick={() => {
+              if (disabled) return;
+              onSelect(option);
+            }}
             className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border capitalize
               transition-colors focus:outline-1 focus:outline-offset-2 focus:outline-blue-400 hover:border-blue-400 hover:text-blue-400 duration-200 ease-in-out
               ${

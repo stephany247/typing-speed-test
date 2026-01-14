@@ -35,7 +35,6 @@ export default function Dropdown({
       <button
         type="button"
         disabled={disabled}
-        // onClick={() => setOpen((prev) => !prev)}
         onClick={() => {
           if (disabled) return;
           setOpen((prev) => !prev);

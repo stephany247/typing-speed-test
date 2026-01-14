@@ -11,11 +11,13 @@ import passagesData from "./data/data.json";
 import { useTypingTest } from "./hooks/useTypingTest";
 import { calculateStats } from "./utils/calculateStats";
 import Results from "./components/Results";
+import { getBestWpm, setBestWpm } from "./utils/storage";
 
-const data = passagesData as PassageData;
 export type ModeConfig =
   | { mode: "timed"; duration: number }
   | { mode: "passage" };
+
+const data = passagesData as PassageData;
 
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
@@ -24,6 +26,9 @@ function App() {
     mode: "timed",
     duration: 30,
   });
+  const [bestWpm, setBestWpmState] = useState<number | null>(() =>
+    getBestWpm()
+  );
 
   const text = passage?.text;
   const {
@@ -52,19 +57,39 @@ function App() {
   }, [difficulty]);
 
   const displayTime = modeConfig.mode === "timed" ? timeLeft : elapsedTime;
-  // const isFinished =
-  //   (modeConfig.mode === "timed" && timeLeft === 0) ||
-  //   (modeConfig.mode === "passage" &&
-  //     typed.length > 0 &&
-  //     typed.length === passage?.text.length);
 
   const isFinished =
     (modeConfig.mode === "timed" && timeLeft === 0) ||
     (typed.length > 0 && typed.length === passage?.text.length);
 
+  // const bestWpm = getBestWpm();
+
+  const [resultFlags, setResultFlags] = useState({
+    isFirstTest: false,
+    isNewHighScore: false,
+  });
+
+  useEffect(() => {
+    if (!isFinished) return;
+
+    const prevBest = bestWpm;
+
+    if (prevBest === null) {
+      setResultFlags({ isFirstTest: true, isNewHighScore: false });
+      setBestWpm(stats.wpm);
+      setBestWpmState(stats.wpm);
+    } else if (stats.wpm > prevBest) {
+      setResultFlags({ isFirstTest: false, isNewHighScore: true });
+      setBestWpm(stats.wpm);
+      setBestWpmState(stats.wpm);
+    } else {
+      setResultFlags({ isFirstTest: false, isNewHighScore: false });
+    }
+  }, [isFinished]);
+
   return (
     <>
-      <Header />
+      <Header bestWPM={bestWpm ?? stats.wpm} />
       <Controls
         difficulty={difficulty}
         setDifficulty={setDifficulty}
@@ -91,10 +116,10 @@ function App() {
         <Results
           wpm={stats.wpm}
           accuracy={stats.accuracy}
-          characters={typed.length}
           totalTyped={typed.length}
-          errorCount={errors.length}
-          bestWpm={92} // placeholder for now
+          errorCount={accuracyErrors.length}
+          isFirstTest={resultFlags.isFirstTest}
+          isNewHighScore={resultFlags.isNewHighScore}
           onRestart={resetGame}
         />
       )}
