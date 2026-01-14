@@ -50,11 +50,21 @@ function App() {
     elapsedTime,
   });
 
-  useEffect(() => {
+  const pickRandomPassage = () => {
     const passages = data[difficulty];
     const random = passages[Math.floor(Math.random() * passages.length)];
     setPassage(random);
+  };
+
+  useEffect(() => {
+    pickRandomPassage();
   }, [difficulty]);
+
+  const handleRestart = () => {
+  resetGame()
+  pickRandomPassage()
+}
+
 
   const displayTime = modeConfig.mode === "timed" ? timeLeft : elapsedTime;
 
@@ -99,7 +109,7 @@ function App() {
           time={displayTime}
           modeConfig={modeConfig}
           setModeConfig={setModeConfig}
-          onReset={resetGame}
+          onReset={handleRestart}
           isTesting={isTesting}
         />
       )}
@@ -110,7 +120,7 @@ function App() {
           typed={typed}
           errors={errors}
           onStart={startGame}
-          onRestart={resetGame}
+          onRestart={handleRestart}
         />
       )}
 
@@ -122,7 +132,7 @@ function App() {
           errorCount={accuracyErrors.length}
           isFirstTest={resultFlags.isFirstTest}
           isNewHighScore={resultFlags.isNewHighScore}
-          onRestart={resetGame}
+          onRestart={handleRestart}
         />
       )}
     </>
