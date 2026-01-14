@@ -18,11 +18,11 @@ export type ModeConfig =
   | { mode: "passage" };
 
 function App() {
-  const [difficulty, setDifficulty] = useState<Difficulty>("hard");
+  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [passage, setPassage] = useState<PassageType | null>(null);
   const [modeConfig, setModeConfig] = useState<ModeConfig>({
     mode: "timed",
-    duration: 60,
+    duration: 30,
   });
 
   const text = passage?.text;
@@ -35,10 +35,12 @@ function App() {
     elapsedTime,
     timeLeft,
     isTesting,
+    accuracyErrors,
+    accuracyHistory,
   } = useTypingTest(text ?? "", modeConfig);
   const stats = calculateStats({
-    typed,
-    errors,
+    accuracyErrors,
+    accuracyHistory,
     elapsedTime,
   });
 

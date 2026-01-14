@@ -13,6 +13,9 @@ export function useTypingTest(text: string, config: Config) {
         config.mode === "timed" ? config.duration : 0
     )
     const [isTesting, setIsTesting] = useState(false);
+    const [accuracyErrors, setAccuracyErrors] = useState<number[]>([])
+    const [accuracyHistory, setAccuracyHistory] = useState<boolean[]>([])
+
 
     const startGame = () => {
         if (!hasStarted) setHasStarted(true)
@@ -51,7 +54,29 @@ export function useTypingTest(text: string, config: Config) {
                 return
             }
 
-            setTyped(prev => prev + e.key)
+            setTyped(prev => {
+                const index = prev.length
+                const isCorrect = e.key === text[index]
+
+                setAccuracyHistory(hist => {
+                    //\ do nothing
+                    if (hist[index] !== undefined) return hist
+
+                    const next = [...hist]
+                    next[index] = isCorrect
+                    return next
+                })
+
+                setAccuracyErrors(errs => {
+                    // only count NEW wrong characters
+                    if (isCorrect) return errs
+                    if (errs.includes(index)) return errs
+                    return [...errs, index]
+                })
+
+                return prev + e.key
+            })
+
         }
 
         window.addEventListener("keydown", handleKeyDown)
@@ -110,5 +135,7 @@ export function useTypingTest(text: string, config: Config) {
         resetGame,
         elapsedTime,
         isTesting,
+        accuracyErrors,
+        accuracyHistory,
     }
 }
