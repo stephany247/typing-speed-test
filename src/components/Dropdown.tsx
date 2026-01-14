@@ -4,9 +4,15 @@ type DropdownProps = {
   value: string;
   options: string[];
   onSelect: (value: string) => void;
+  disabled?: boolean;
 };
 
-export default function Dropdown({ value, options, onSelect }: DropdownProps) {
+export default function Dropdown({
+  value,
+  options,
+  onSelect,
+  disabled,
+}: DropdownProps) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -28,8 +34,14 @@ export default function Dropdown({ value, options, onSelect }: DropdownProps) {
     <div ref={dropdownRef} className="relative text-sm w-full">
       <button
         type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center justify-center gap-2.5 border border-neutral-500 px-3 py-2 rounded-lg text-neutral-0 w-full capitalize"
+        disabled={disabled}
+        // onClick={() => setOpen((prev) => !prev)}
+        onClick={() => {
+          if (disabled) return;
+          setOpen((prev) => !prev);
+        }}
+        className={`flex items-center justify-center gap-2.5 border border-neutral-500 px-3 py-2 rounded-lg text-neutral-0 w-full capitalize 
+          ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
       >
         {value}
         <img
@@ -41,7 +53,7 @@ export default function Dropdown({ value, options, onSelect }: DropdownProps) {
         />
       </button>
 
-      {open && (
+      {open && !disabled && (
         <ul className="absolute right-0 mt-2 w-full bg-neutral-800 rounded shadow-lg divide-y divide-neutral-700 z-10">
           {options.map((option) => {
             const isActive = option === value;
@@ -50,7 +62,12 @@ export default function Dropdown({ value, options, onSelect }: DropdownProps) {
               <li key={option}>
                 <button
                   type="button"
+                  // onClick={() => {
+                  //   onSelect(option);
+                  //   setOpen(false);
+                  // }}
                   onClick={() => {
+                    if (disabled) return;
                     onSelect(option);
                     setOpen(false);
                   }}

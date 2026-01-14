@@ -13,10 +13,8 @@ type ResultsProps = {
 export default function Results({
   wpm,
   accuracy,
-  characters,
   totalTyped,
   errorCount,
-  bestWpm,
   onRestart,
 }: ResultsProps) {
   return (
@@ -49,8 +47,6 @@ export default function Results({
           value={`${accuracy}%`}
           isError={accuracy < 100}
         />
-        {/* <ResultStat label="Characters" value={characters} /> */}
-        {/* <ResultStat label="Characters"  value={`${totalTyped}/${errorCount}`} /> */}
         <ResultStat
           label="Characters"
           value={

@@ -38,6 +38,7 @@ function App() {
     accuracyErrors,
     accuracyHistory,
   } = useTypingTest(text ?? "", modeConfig);
+
   const stats = calculateStats({
     accuracyErrors,
     accuracyHistory,
@@ -58,7 +59,7 @@ function App() {
   //     typed.length === passage?.text.length);
 
   const isFinished =
-    timeLeft === 0 ||
+    (modeConfig.mode === "timed" && timeLeft === 0) ||
     (typed.length > 0 && typed.length === passage?.text.length);
 
   return (

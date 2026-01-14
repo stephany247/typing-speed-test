@@ -27,6 +27,9 @@ export function useTypingTest(text: string, config: Config) {
         setElapsedTime(0)
         setTyped("")
         setErrors([])
+        setAccuracyErrors([])
+        setAccuracyHistory([])
+
         if (config.mode === "timed") {
             setTimeLeft(config.duration)
         } else {

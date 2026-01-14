@@ -63,9 +63,11 @@ export default function Controls({
           <OptionGroup
             value={difficulty}
             options={["easy", "medium", "hard"]}
-            onSelect={(value) =>
-              setDifficulty(value.toLowerCase() as Difficulty)
-            }
+            onSelect={(value) => {
+              setDifficulty(value.toLowerCase() as Difficulty);
+              onReset();
+            }}
+            disabled={isTesting}
           />
         </div>
 
@@ -90,6 +92,7 @@ export default function Controls({
 
               onReset();
             }}
+            disabled={isTesting}
           />
         </div>
       </div>
@@ -98,7 +101,11 @@ export default function Controls({
         <Dropdown
           value={difficulty}
           options={["easy", "medium", "hard"]}
-          onSelect={(value) => setDifficulty(value.toLowerCase() as Difficulty)}
+          onSelect={(value) => {
+            setDifficulty(value.toLowerCase() as Difficulty);
+            onReset();
+          }}
+          disabled={isTesting}
         />
 
         <Dropdown
@@ -120,6 +127,7 @@ export default function Controls({
 
             onReset();
           }}
+          disabled={isTesting}
         />
       </div>
     </header>
