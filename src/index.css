@@ -19,5 +19,5 @@
 }
 
 body {
-  @apply bg-neutral-900 text-neutral-0 font-sora p-4 pb-8 lg:p-8;
+  @apply bg-neutral-900 text-neutral-0 font-sora p-4 pb-8 lg:p-8 container mx-auto;
 }

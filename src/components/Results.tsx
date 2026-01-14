@@ -32,8 +32,8 @@ export default function Results({
   }
 
   return (
-    <section className="flex flex-col items-center text-center gap-6 mt-12">
-      <div className="w-full flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center text-center gap-6 mt-12 md:mt-20 lg:mt-16">
+      <div className="relative w-full flex flex-col items-center justify-center">
         {isNewHighScore ? (
           <img
             src="/images/icon-new-pb.svg"
@@ -51,18 +51,18 @@ export default function Results({
         <img
           src="/images/pattern-star-2.svg"
           alt=""
-          className="self-start size-5"
+          className="absolute bottom-1/4 left-4 size-5"
         />
       </div>
+      <div className="space-y-2.5">
+        {/* Heading */}
+        <h2 className="text-2xl font-semibold">{heading}</h2>
 
-      {/* Heading */}
-      <h2 className="text-2xl font-semibold">{heading}</h2>
-
-      {/* Message */}
-      <p className="text-neutral-400">{message}</p>
-
+        {/* Message */}
+        <p className="text-neutral-400">{message}</p>
+      </div>
       {/* Main result */}
-      <div className="flex flex-col gap-4 mt-4 w-full">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-5 mt-4 w-full max-w-xl md:mb-8">
         <ResultStat label="WPM:" value={wpm} />
 
         <ResultStat
@@ -86,9 +86,14 @@ export default function Results({
       {/* Action */}
       <button
         onClick={onRestart}
-        className="mt-4 px-6 py-2 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-blue-500 transition"
+        className="mt-4 px-4 py-2.5 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-neutral-0/90 transition-colors duration-200 ease-in-out inline-flex gap-2 cursor-pointer"
       >
-        Go again
+        Go Again{" "}
+        <img
+          src="/images/icon-undo.svg"
+          alt="Undo icon"
+          // className="self-end size-10"
+        />
       </button>
 
       <img

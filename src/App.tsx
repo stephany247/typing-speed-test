@@ -90,17 +90,19 @@ function App() {
   return (
     <>
       <Header bestWPM={bestWpm ?? stats.wpm} />
-      <Controls
-        difficulty={difficulty}
-        setDifficulty={setDifficulty}
-        wpm={stats.wpm}
-        accuracy={stats.accuracy}
-        time={displayTime}
-        modeConfig={modeConfig}
-        setModeConfig={setModeConfig}
-        onReset={resetGame}
-        isTesting={isTesting}
-      />
+      {!isFinished && (
+        <Controls
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+          wpm={stats.wpm}
+          accuracy={stats.accuracy}
+          time={displayTime}
+          modeConfig={modeConfig}
+          setModeConfig={setModeConfig}
+          onReset={resetGame}
+          isTesting={isTesting}
+        />
+      )}
       {passage && !isFinished && (
         <Passage
           text={passage.text}
