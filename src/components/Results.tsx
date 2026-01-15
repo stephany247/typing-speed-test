@@ -1,4 +1,5 @@
 import type React from "react";
+import Confetti from "./Confetti";
 
 type ResultsProps = {
   wpm: number;
@@ -37,6 +38,7 @@ export default function Results({
         isNewHighScore ? "my-12 md:my-20 lg:my-16" : "mt-12 md:mt-20 lg:mt-16"
       }`}
     >
+      {isNewHighScore && <Confetti fire />}
       <div className="relative w-full flex flex-col items-center justify-center">
         {isNewHighScore ? (
           <img
@@ -68,7 +70,9 @@ export default function Results({
       </div>
       <div className="space-y-2.5 mt-8">
         {/* Heading */}
-        <h2 className="text-2xl font-semibold md:text-4xl md:font-bold">{heading}</h2>
+        <h2 className="text-2xl font-semibold md:text-4xl md:font-bold">
+          {heading}
+        </h2>
 
         {/* Message */}
         <p className="text-neutral-400 md:text-lg">{message}</p>
