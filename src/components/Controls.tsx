@@ -50,7 +50,11 @@ export default function Controls({
           <p className="text-neutral-400 md:text-lg">Time:</p>
           <p
             className={`text-xl font-semibold md:text-2xl transition-colors duration-200 ease-in-out ${
-              isTesting ? "text-yellow-400" : "text-neutral-0"
+               modeConfig.mode === "timed" && time < 10
+                ? "text-red-500"
+                : isTesting
+                ? "text-yellow-400"
+                : "text-neutral-0"
             }`}
           >
             {Math.floor(time / 60)}:{String(time % 60).padStart(2, "0")}

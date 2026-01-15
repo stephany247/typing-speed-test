@@ -24,7 +24,7 @@ function App() {
   const [passage, setPassage] = useState<PassageType | null>(null);
   const [modeConfig, setModeConfig] = useState<ModeConfig>({
     mode: "timed",
-    duration: 30,
+    duration: 60,
   });
   const [bestWpm, setBestWpmState] = useState<number | null>(() =>
     getBestWpm()

@@ -65,7 +65,7 @@ export default function Passage({
           />
 
           {/* text */}
-          <p className="relative text-3xl tracking-[0.4px] leading-[136%]">
+          <p className="relative text-[2rem] tracking-[0.4px] leading-[150%] md:text-[2.5rem]">
             {text.split("").map((char, index) => (
               <span
                 key={index}
@@ -74,7 +74,7 @@ export default function Passage({
                 }}
                 className={
                   errors.includes(index)
-                    ? "text-red-500"
+                    ? "text-red-500 underline underline-offset-10"
                     : typed[index]
                     ? "text-green-500"
                     : "text-neutral-400"
@@ -101,7 +101,7 @@ export default function Passage({
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center backdrop-blur-s">
           <button
             onClick={onStart}
-            className="px-4 py-2.5 bg-blue-600 transition-colors duration-200 ease-in-out rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2] cursor-pointer focus:outline-1 focus:outline-offset-2 focus:outline-blue-400 hover:border-blue-400"
+            className="px-4 py-2.5 bg-blue-600 transition-colors duration-200 ease-in-out rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2] cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-blue-600 hover:border-blue-400 hover:bg-blue-400"
           >
             Start Typing Test
           </button>

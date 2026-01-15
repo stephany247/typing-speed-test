@@ -53,7 +53,7 @@ export default function Dropdown({
       </button>
 
       {open && !disabled && (
-        <ul className="absolute right-0 mt-2 w-full bg-neutral-800 rounded shadow-lg divide-y divide-neutral-700 z-10">
+        <ul className="absolute right-0 mt-2 w-full bg-neutral-800 rounded-lg shadow-lg divide-y divide-neutral-700 z-10">
           {options.map((option) => {
             const isActive = option === value;
 
@@ -76,7 +76,7 @@ export default function Dropdown({
                     className={`h-5 w-5 rounded-full border flex items-center justify-center
                   ${
                     isActive
-                      ? "bg-blue-600 border-transparent"
+                      ? "bg-blue-400 border-transparent"
                       : "border-neutral-0"
                   }`}
                   >
