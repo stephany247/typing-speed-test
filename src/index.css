@@ -71,3 +71,7 @@ body {
     opacity: 0.1;
   }
 }
+
+th, td {
+  @apply p-3;
+}

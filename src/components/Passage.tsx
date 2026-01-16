@@ -56,7 +56,7 @@ export default function Passage({
         <div className="relative inline-block">
           {/* highlight */}
           <span
-            className="absolute top-0 transition-transform duration-200 ease-out bg-neutral-700 rounded-sm"
+            className="absolute top-0 transition-transform duration-200 ease-in-out bg-neutral-700 rounded-sm"
             style={{
               transform: `translate(${cursorStyle.x}px, ${cursorStyle.y}px)`,
               width: cursorStyle.width,

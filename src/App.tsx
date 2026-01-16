@@ -11,7 +11,8 @@ import passagesData from "./data/data.json";
 import { useTypingTest } from "./hooks/useTypingTest";
 import { calculateStats } from "./utils/calculateStats";
 import Results from "./components/Results";
-import { getBestWpm, setBestWpm } from "./utils/storage";
+import { getBestWpm, saveResult } from "./utils/storage";
+import HistoryDialog from "./components/HistoryDialog";
 
 export type ModeConfig =
   | { mode: "timed"; duration: number }
@@ -29,6 +30,7 @@ function App() {
   const [bestWpm, setBestWpmState] = useState<number | null>(() =>
     getBestWpm()
   );
+  const [showHistory, setShowHistory] = useState(false);
 
   const text = passage?.text;
   const {
@@ -61,10 +63,9 @@ function App() {
   }, [difficulty]);
 
   const handleRestart = () => {
-  resetGame()
-  pickRandomPassage()
-}
-
+    resetGame();
+    pickRandomPassage();
+  };
 
   const displayTime = modeConfig.mode === "timed" ? timeLeft : elapsedTime;
 
@@ -84,13 +85,22 @@ function App() {
 
     const prevBest = bestWpm;
 
+    saveResult({
+    date: Date.now(),
+    mode: modeConfig.mode,
+    duration:
+      modeConfig.mode === "timed" ? modeConfig.duration : undefined,
+    difficulty,
+    wpm: stats.wpm,
+    accuracy: stats.accuracy,
+  });
+
     if (prevBest === null) {
       setResultFlags({ isFirstTest: true, isNewHighScore: false });
-      setBestWpm(stats.wpm);
       setBestWpmState(stats.wpm);
     } else if (stats.wpm > prevBest) {
       setResultFlags({ isFirstTest: false, isNewHighScore: true });
-      setBestWpm(stats.wpm);
+      // setBestWpm(stats.wpm);
       setBestWpmState(stats.wpm);
     } else {
       setResultFlags({ isFirstTest: false, isNewHighScore: false });
@@ -99,7 +109,9 @@ function App() {
 
   return (
     <>
-      <Header bestWPM={bestWpm ?? stats.wpm} />
+      {showHistory && <HistoryDialog onClose={() => setShowHistory(false)} />}
+
+      <Header onOpenHistory={() => setShowHistory(true)} bestWPM={bestWpm ?? stats.wpm} />
       {!isFinished && (
         <Controls
           difficulty={difficulty}
