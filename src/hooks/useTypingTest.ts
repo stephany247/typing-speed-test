@@ -123,6 +123,17 @@ export function useTypingTest(text: string, config: Config) {
         return () => clearInterval(id)
     }, [isTesting, config])
 
+    useEffect(() => {
+        if (!isTesting) return
+        if (typed.length === 0) return
+        if (typed.length !== text.length) return
+
+        // User finished typing early
+        setIsTesting(false)
+        setHasStarted(false)
+    }, [typed.length, text.length, isTesting])
+
+
     // sync when mode changes
     useEffect(() => {
         setTimeLeft(config.mode === "timed" ? config.duration : 0)

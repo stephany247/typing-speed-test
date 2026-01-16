@@ -6,8 +6,8 @@ type StatsInput = {
 
 export function calculateStats({ accuracyErrors, accuracyHistory, elapsedTime }: StatsInput) {
   const incorrect = accuracyErrors.length
-  const correct = accuracyHistory.filter(Boolean).length
   const total = accuracyHistory.length
+  const correct = total - incorrect
 
   const minutes = elapsedTime / 60
   const wpm =
