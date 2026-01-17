@@ -37,6 +37,31 @@ export function useTypingTest(text: string, config: Config) {
         }
     }
 
+    const handleCharInput = (char: string) => {
+  if (!isTesting) setIsTesting(true);
+
+  setTyped(prev => {
+    const index = prev.length;
+    const isCorrect = char === text[index];
+
+    setAccuracyHistory(hist => {
+      if (hist[index] !== undefined) return hist;
+      const next = [...hist];
+      next[index] = isCorrect;
+      return next;
+    });
+
+    setAccuracyErrors(errs => {
+      if (isCorrect) return errs;
+      if (errs.includes(index)) return errs;
+      return [...errs, index];
+    });
+
+    return prev + char;
+  });
+};
+
+
     // typing logic F
     useEffect(() => {
         if (!hasStarted) return
@@ -161,5 +186,6 @@ export function useTypingTest(text: string, config: Config) {
         isTesting,
         accuracyErrors,
         accuracyHistory,
+        handleCharInput,
     }
 }

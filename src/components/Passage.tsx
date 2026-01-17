@@ -13,6 +13,7 @@ type PassageProps = {
   errors: number[];
   onStart: () => void;
   onRestart: () => void;
+  onCharInput: (char: string) => void;
 };
 
 export default function Passage({
@@ -22,8 +23,10 @@ export default function Passage({
   typed,
   errors,
   onStart,
+  onCharInput,
 }: PassageProps) {
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [cursorStyle, setCursorStyle] = useState({
     x: 0,
     y: 0,
@@ -46,6 +49,22 @@ export default function Passage({
     });
   }, [typed.length]);
 
+  const handleMobileInput = (e: React.FormEvent<HTMLInputElement>) => {
+    if (!hasStarted) return;
+
+    const value = e.currentTarget.value;
+    const lastChar = value[value.length - 1];
+    if (!lastChar) return;
+
+    onCharInput(lastChar);
+
+    e.currentTarget.value = "";
+  };
+
+  useEffect(() => {
+    if (hasStarted) inputRef.current?.focus();
+  }, [hasStarted]);
+
   return (
     <div className="mt-8 relative">
       <div
@@ -53,7 +72,10 @@ export default function Passage({
           !hasStarted ? "blur-sm opacity-40 scale-95" : ""
         }`}
       >
-        <div className="relative inline-block">
+        <div
+          className="relative inline-block"
+          onClick={() => inputRef.current?.focus()}
+        >
           {/* highlight */}
           <span
             className="absolute top-0 transition-transform duration-150 ease-linear bg-neutral-700 rounded-sm"
@@ -62,6 +84,14 @@ export default function Passage({
               width: cursorStyle.width,
               height: cursorStyle.height,
             }}
+          />
+          <input
+            autoFocus
+            ref={inputRef}
+            inputMode="text"
+            aria-label="Typing input"
+            className="absolute opacity-0"
+            onInput={handleMobileInput}
           />
 
           {/* text */}

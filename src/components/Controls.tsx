@@ -118,7 +118,7 @@ export default function Controls({
         </div>
       </div>
 
-      <div className="flex justify-center items-center gap-4 md:hidden">
+      <div className="flex justify-center items-center gap-2 md:hidden">
         <Dropdown
           value={difficulty}
           options={["easy", "medium", "hard"]}

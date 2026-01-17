@@ -45,6 +45,7 @@ function App() {
     isTesting,
     accuracyErrors,
     accuracyHistory,
+    handleCharInput,
   } = useTypingTest(text ?? "", modeConfig);
 
   const stats = calculateStats({
@@ -144,6 +145,7 @@ function App() {
           errors={errors}
           onStart={startGame}
           onRestart={handleRestart}
+          onCharInput={handleCharInput}
         />
       )}
 
