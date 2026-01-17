@@ -4,7 +4,6 @@ import Controls from "./components/Controls";
 import type {
   Difficulty,
   Passage as PassageType,
-  PassageData,
   Category,
 } from "./types/passage";
 import Passage from "./components/Passage";

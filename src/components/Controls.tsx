@@ -1,6 +1,6 @@
 import type { ModeConfig } from "../App";
 import { MODE_OPTIONS } from "../data/modes";
-import type { Difficulty } from "../types/passage";
+import type { Category, Difficulty } from "../types/passage";
 import Dropdown from "./Dropdown";
 import OptionGroup from "./OptionGroup";
 
@@ -14,7 +14,7 @@ type ControlsProps = {
   setModeConfig: (config: ModeConfig) => void;
   onReset: () => void;
   category: string;
-  setCategory: (category: string) => void;
+  setCategory: (category: Category) => void;
   isTesting: boolean;
 };
 
@@ -85,7 +85,7 @@ export default function Controls({
             value={category}
             options={["general", "quotes", "lyrics", "code"]}
             onSelect={(value) => {
-              setCategory(value.toLowerCase());
+              setCategory(value.toLowerCase() as Category);
               onReset();
             }}
             disabled={isTesting}
@@ -133,7 +133,7 @@ export default function Controls({
           value={category}
           options={["general", "quotes", "lyrics", "code"]}
           onSelect={(value) => {
-            setCategory(value.toLowerCase());
+            setCategory(value.toLowerCase() as Category);
             onReset();
           }}
           disabled={isTesting}
