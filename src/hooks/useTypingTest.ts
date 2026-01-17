@@ -42,6 +42,16 @@ export function useTypingTest(text: string, config: Config) {
         if (!hasStarted) return
 
         const handleKeyDown = (e: KeyboardEvent) => {
+            const target = e.target as HTMLElement;
+
+            if (
+                target.tagName === "INPUT" ||
+                target.tagName === "TEXTAREA" ||
+                target.isContentEditable
+            ) {
+                return;
+            }
+
             if (e.key === " " || e.key === "Backspace") {
                 e.preventDefault()
             }
