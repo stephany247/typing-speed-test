@@ -39,7 +39,7 @@ export default function Dropdown({
           if (disabled) return;
           setOpen((prev) => !prev);
         }}
-        className={`flex items-center justify-center gap-2.5 border border-neutral-500 px-3 py-2 rounded-lg text-neutral-0 w-full capitalize 
+        className={`flex items-center justify-center gap-2.5 border border-neutral-500 px-3 py-2 rounded-lg text-neutral-0 text-sm md:text-base w-full capitalize 
           ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
       >
         {value}
@@ -61,16 +61,12 @@ export default function Dropdown({
               <li key={option}>
                 <button
                   type="button"
-                  // onClick={() => {
-                  //   onSelect(option);
-                  //   setOpen(false);
-                  // }}
                   onClick={() => {
                     if (disabled) return;
                     onSelect(option);
                     setOpen(false);
                   }}
-                  className="flex w-full items-center gap-3 px-3 py-2 hover:bg-neutral-700 text-left capitalize"
+                  className="flex w-full items-center gap-2 px-2 py-2 hover:bg-neutral-700 text-left capitalize"
                 >
                   <span
                     className={`h-5 w-5 rounded-full border flex items-center justify-center

@@ -39,3 +39,24 @@ export function saveResult(result: TypingStats["history"][0]) {
     })
   );
 }
+
+export function deleteHistoryItem(index: number) {
+  const data = getStats();
+
+  data.history = data.history.filter((_, i) => i !== index);
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+export function clearHistory() {
+  const data = getStats();
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      ...data,
+      history: [],
+    })
+  );
+}
+
