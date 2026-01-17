@@ -22,7 +22,6 @@ export default function Passage({
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const prevValueRef = useRef("");
-  const hasFocusedRef = useRef(false);
 
   const [cursorStyle, setCursorStyle] = useState({
     x: 0,
@@ -70,7 +69,6 @@ export default function Passage({
   return (
     <div className="mt-8 relative">
       <input
-        autoFocus
         ref={inputRef}
         inputMode="text"
         autoCorrect="off"
