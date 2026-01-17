@@ -1,9 +1,3 @@
-// type PassageProps = {
-//   text: string;
-//   onRestart: () => void;
-//   hasStarted?: boolean;
-// };
-
 import { useEffect, useRef, useState } from "react";
 
 type PassageProps = {
@@ -28,6 +22,7 @@ export default function Passage({
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const prevValueRef = useRef("");
+  const hasFocusedRef = useRef(false);
 
   const [cursorStyle, setCursorStyle] = useState({
     x: 0,
@@ -73,7 +68,10 @@ export default function Passage({
   };
 
   useEffect(() => {
-    if (hasStarted) inputRef.current?.focus();
+    if (hasStarted && !hasFocusedRef.current) {
+      inputRef.current?.focus();
+      hasFocusedRef.current = true;
+    }
   }, [hasStarted]);
 
   return (
@@ -96,17 +94,6 @@ export default function Passage({
               height: cursorStyle.height,
             }}
           />
-          <input
-            autoFocus
-            ref={inputRef}
-            inputMode="text"
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            aria-label="Typing input"
-            className="absolute opacity-0"
-            onInput={handleMobileInput}
-          />
 
           {/* text */}
           <p className="relative text-[2rem] tracking-[0.4px] leading-[150%] md:text-[2.5rem]">
@@ -128,6 +115,18 @@ export default function Passage({
               </span>
             ))}
           </p>
+
+          <input
+            autoFocus
+            ref={inputRef}
+            inputMode="text"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            aria-label="Typing input"
+            className="absolute opacity-0"
+            onInput={handleMobileInput}
+          />
         </div>
       </div>
 

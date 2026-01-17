@@ -75,3 +75,9 @@ body {
 th, td {
   @apply p-3;
 }
+
+html, body {
+  height: 100%;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+}
