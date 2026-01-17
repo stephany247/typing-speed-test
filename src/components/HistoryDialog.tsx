@@ -64,7 +64,7 @@ export default function HistoryDialog({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto border border-neutral-600 rounded-lg overflow-hidden">
+        <div className="passage-scroll flex-1 overflow-y-auto border border-neutral-600 rounded-lg overflow-hidden">
           {history.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center gap-3 text-neutral-200 p-6">
               <img

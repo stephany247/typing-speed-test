@@ -79,7 +79,7 @@ export default function Passage({
         onInput={handleMobileInput}
       />
       <div
-        className={`my-8 leading-relaxed max-h-140 overflow-y-auto transition-all duration-500 ease-in-out  ${
+        className={`passage-scroll my-8 leading-relaxed max-h-140 overflow-y-auto transition-all duration-500 ease-in-out  ${
           !hasStarted ? "blur-sm opacity-40 scale-95" : ""
         }`}
       >
