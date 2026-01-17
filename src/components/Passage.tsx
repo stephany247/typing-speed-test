@@ -27,6 +27,8 @@ export default function Passage({
 }: PassageProps) {
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const prevValueRef = useRef("");
+
   const [cursorStyle, setCursorStyle] = useState({
     x: 0,
     y: 0,
@@ -53,12 +55,21 @@ export default function Passage({
     if (!hasStarted) return;
 
     const value = e.currentTarget.value;
+    const prev = prevValueRef.current;
     const lastChar = value[value.length - 1];
-    if (!lastChar) return;
 
-    onCharInput(lastChar);
+    // BACKSPACE
+    if (value.length < prev.length) {
+      onCharInput("BACKSPACE");
+      prevValueRef.current = value;
+      return;
+    }
 
-    e.currentTarget.value = "";
+    if (lastChar) {
+      onCharInput(lastChar);
+    }
+
+    prevValueRef.current = value;
   };
 
   useEffect(() => {
@@ -89,6 +100,9 @@ export default function Passage({
             autoFocus
             ref={inputRef}
             inputMode="text"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
             aria-label="Typing input"
             className="absolute opacity-0"
             onInput={handleMobileInput}

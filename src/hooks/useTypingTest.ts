@@ -38,28 +38,34 @@ export function useTypingTest(text: string, config: Config) {
     }
 
     const handleCharInput = (char: string) => {
-  if (!isTesting) setIsTesting(true);
+        if (!isTesting) setIsTesting(true);
 
-  setTyped(prev => {
-    const index = prev.length;
-    const isCorrect = char === text[index];
+        if (char === "BACKSPACE") {
+            setTyped(prev => prev.slice(0, -1));
+            return;
+        }
 
-    setAccuracyHistory(hist => {
-      if (hist[index] !== undefined) return hist;
-      const next = [...hist];
-      next[index] = isCorrect;
-      return next;
-    });
 
-    setAccuracyErrors(errs => {
-      if (isCorrect) return errs;
-      if (errs.includes(index)) return errs;
-      return [...errs, index];
-    });
+        setTyped(prev => {
+            const index = prev.length;
+            const isCorrect = char === text[index];
 
-    return prev + char;
-  });
-};
+            setAccuracyHistory(hist => {
+                if (hist[index] !== undefined) return hist;
+                const next = [...hist];
+                next[index] = isCorrect;
+                return next;
+            });
+
+            setAccuracyErrors(errs => {
+                if (isCorrect) return errs;
+                if (errs.includes(index)) return errs;
+                return [...errs, index];
+            });
+
+            return prev + char;
+        });
+    };
 
 
     // typing logic F
