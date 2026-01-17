@@ -67,15 +67,19 @@ export default function Passage({
     prevValueRef.current = value;
   };
 
-  useEffect(() => {
-    if (hasStarted && !hasFocusedRef.current) {
-      inputRef.current?.focus();
-      hasFocusedRef.current = true;
-    }
-  }, [hasStarted]);
-
   return (
     <div className="mt-8 relative">
+      <input
+        autoFocus
+        ref={inputRef}
+        inputMode="text"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
+        aria-label="Typing input"
+        className="fixed top-0 left-0 opacity-0"
+        onInput={handleMobileInput}
+      />
       <div
         className={`my-8 leading-relaxed max-h-140 overflow-y-auto transition-all duration-500 ease-in-out  ${
           !hasStarted ? "blur-sm opacity-40 scale-95" : ""
@@ -115,18 +119,6 @@ export default function Passage({
               </span>
             ))}
           </p>
-
-          <input
-            autoFocus
-            ref={inputRef}
-            inputMode="text"
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            aria-label="Typing input"
-            className="absolute opacity-0"
-            onInput={handleMobileInput}
-          />
         </div>
       </div>
 
@@ -143,13 +135,19 @@ export default function Passage({
       ) : (
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center backdrop-blur-s">
           <button
-            onClick={onStart}
+            onClick={() => {
+              onStart();
+              inputRef.current?.focus();
+            }}
             className="px-4 py-2.5 bg-blue-600 transition-colors duration-200 ease-in-out rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2] cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-blue-600 hover:border-blue-400 hover:bg-blue-400"
           >
             Start Typing Test
           </button>
           <p
-            onClick={onStart}
+            onClick={() => {
+              onStart();
+              inputRef.current?.focus();
+            }}
             className="text-lg tracking-[0.4px] leading-[136%]"
           >
             Or click the text and start typing
