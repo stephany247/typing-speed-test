@@ -5,6 +5,7 @@ import type {
   Difficulty,
   Passage as PassageType,
   PassageData,
+  Category,
 } from "./types/passage";
 import Passage from "./components/Passage";
 import passagesData from "./data/data.json";
@@ -18,7 +19,7 @@ export type ModeConfig =
   | { mode: "timed"; duration: number }
   | { mode: "passage" };
 
-const data = passagesData as PassageData;
+const data = passagesData;
 
 function App() {
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
@@ -31,6 +32,7 @@ function App() {
     getBestWpm()
   );
   const [showHistory, setShowHistory] = useState(false);
+  const [category, setCategory] = useState<Category>("general");
 
   const text = passage?.text;
   const {
@@ -53,14 +55,20 @@ function App() {
   });
 
   const pickRandomPassage = () => {
-    const passages = data[difficulty];
+    let passages: PassageType[];
+
+    if (category === "general") {
+      passages = data[difficulty];
+    } else {
+      passages = data[category][difficulty];
+    }
     const random = passages[Math.floor(Math.random() * passages.length)];
     setPassage(random);
   };
 
   useEffect(() => {
     pickRandomPassage();
-  }, [difficulty]);
+  }, [difficulty, category]);
 
   const handleRestart = () => {
     resetGame();
@@ -86,14 +94,13 @@ function App() {
     const prevBest = bestWpm;
 
     saveResult({
-    date: Date.now(),
-    mode: modeConfig.mode,
-    duration:
-      modeConfig.mode === "timed" ? modeConfig.duration : undefined,
-    difficulty,
-    wpm: stats.wpm,
-    accuracy: stats.accuracy,
-  });
+      date: Date.now(),
+      mode: modeConfig.mode,
+      duration: modeConfig.mode === "timed" ? modeConfig.duration : undefined,
+      difficulty,
+      wpm: stats.wpm,
+      accuracy: stats.accuracy,
+    });
 
     if (prevBest === null) {
       setResultFlags({ isFirstTest: true, isNewHighScore: false });
@@ -111,7 +118,10 @@ function App() {
     <>
       {showHistory && <HistoryDialog onClose={() => setShowHistory(false)} />}
 
-      <Header onOpenHistory={() => setShowHistory(true)} bestWPM={bestWpm ?? stats.wpm} />
+      <Header
+        onOpenHistory={() => setShowHistory(true)}
+        bestWPM={bestWpm ?? stats.wpm}
+      />
       {!isFinished && (
         <Controls
           difficulty={difficulty}
@@ -123,6 +133,8 @@ function App() {
           setModeConfig={setModeConfig}
           onReset={handleRestart}
           isTesting={isTesting}
+          category={category}
+          setCategory={setCategory}
         />
       )}
       {passage && !isFinished && (

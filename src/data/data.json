@@ -124,5 +124,115 @@
       "id": "hard-10",
       "text": "The archaeological expedition unearthed artifacts that complicated prevailing theories about Bronze Age trade networks. Obsidian from Anatolia, lapis lazuli from Afghanistan, and amber from the Baltic—all discovered in a single Mycenaean tomb—suggested commercial connections far more extensive than previously hypothesized. \"We've underestimated ancient peoples' navigational capabilities and their appetite for luxury goods,\" the lead researcher observed. \"Globalization isn't as modern as we assume.\""
     }
-  ]
+  ],
+  "quotes": {
+    "easy": [
+      {
+        "id": "quotes-easy-1",
+        "text": "The only way to do great work is to love what you do."
+      },
+      {
+        "id": "quotes-easy-2",
+        "text": "Life is what happens when you're busy making other plans."
+      },
+      { "id": "quotes-easy-3", "text": "Happiness depends upon ourselves." },
+      {
+        "id": "quotes-easy-4",
+        "text": "Do what you can, with what you have, where you are."
+      },
+      { "id": "quotes-easy-5", "text": "Stay hungry. Stay foolish." }
+    ],
+    "medium": [
+      {
+        "id": "quotes-medium-1",
+        "text": "Success is not final, failure is not fatal: it is the courage to continue that counts."
+      },
+      {
+        "id": "quotes-medium-2",
+        "text": "In the middle of every difficulty lies opportunity, but only for those willing to see beyond the problem."
+      },
+      {
+        "id": "quotes-medium-3",
+        "text": "It is not the strongest of the species that survive, nor the most intelligent, but the one most responsive to change."
+      }
+    ],
+    "hard": [
+      {
+        "id": "quotes-hard-1",
+        "text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit—formed slowly through discipline, reflection, and deliberate practice."
+      },
+      {
+        "id": "quotes-hard-2",
+        "text": "Man is condemned to be free; because once thrown into the world, he is responsible for everything he does, a burden many spend their lives trying to escape."
+      }
+    ]
+  },
+  "lyrics": {
+    "easy": [
+      {
+        "id": "lyrics-easy-1",
+        "text": "Hello darkness, my old friend, I've come to talk with you again."
+      },
+      {
+        "id": "lyrics-easy-2",
+        "text": "You may say I'm a dreamer, but I'm not the only one."
+      },
+      {
+        "id": "lyrics-easy-3",
+        "text": "I got that sunshine in my pocket, got that good soul in my feet."
+      }
+    ],
+    "medium": [
+      {
+        "id": "lyrics-medium-1",
+        "text": "It's a beautiful day, don't let it get away. You're on the road, but you've got no destination in mind."
+      },
+      {
+        "id": "lyrics-medium-2",
+        "text": "We were both young when I first saw you, I close my eyes and the flashback starts."
+      }
+    ],
+    "hard": [
+      {
+        "id": "lyrics-hard-1",
+        "text": "You can check out any time you like, but you can never leave, a haunting refrain echoing long after the music fades."
+      },
+      {
+        "id": "lyrics-hard-2",
+        "text": "And in the end, the love you take is equal to the love you make, a simple truth wrapped in a quiet melody."
+      }
+    ]
+  },
+  "code": {
+    "easy": [
+      {
+        "id": "code-easy-1",
+        "text": "const sum = (a, b) => a + b;"
+      },
+      {
+        "id": "code-easy-2",
+        "text": "for (let i = 0; i < 5; i++) { console.log(i); }"
+      }
+    ],
+    "medium": [
+      {
+        "id": "code-medium-1",
+        "text": "function debounce(fn, delay) { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); }; }"
+      },
+      {
+        "id": "code-medium-2",
+        "text": "const usersById = users.reduce((acc, user) => ({ ...acc, [user.id]: user }), {});"
+      }
+    ],
+    "hard": [
+      {
+        "id": "code-hard-1",
+        "text": "type Result<T> = { ok: true; value: T } | { ok: false; error: Error };"
+      },
+      {
+        "id": "code-hard-2",
+        "text": "const compose = (...fns) => (x) => fns.reduceRight((v, f) => f(v), x);"
+      }
+    ]
+  }
 }
