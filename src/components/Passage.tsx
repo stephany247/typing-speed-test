@@ -67,7 +67,14 @@ export default function Passage({
   };
 
   return (
-    <div className="mt-8 relative">
+    <div className="pt-2 mt-4 relative">
+      <div className="absolute top-0 left-0 h-px w-full bg-neutral-800">
+        <div
+          className="h-full bg-blue-500 transition-all duration-150"
+          style={{ width: `${(typed.length / text.length) * 100}%` }}
+        />
+      </div>
+
       <input
         ref={inputRef}
         inputMode="text"

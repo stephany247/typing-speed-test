@@ -32,7 +32,7 @@ export default function Controls({
   isTesting,
 }: ControlsProps) {
   return (
-    <header className="flex flex-col gap-4 mt-8 border-b border-neutral-700 pb-4 lg:flex-row lg:justify-between lg:gap-6 lg:flex-wrap">
+    <header className="flex flex-col gap-4 mt-8 lg:flex-row lg:justify-between lg:gap-6 lg:flex-wrap">
       <div className="grid grid-cols-3 items-center justify-center divide-x divide-neutral-700 md:flex md:justify-start">
         <div className="flex flex-col items-center md:flex-row md:gap-4 md:pr-6">
           <p className="text-neutral-400 md:text-lg">WPM:</p>

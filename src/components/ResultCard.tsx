@@ -20,15 +20,7 @@ export function ResultCard({
   errorCount,
 }: ResultCardProps) {
   return (
-    <div
-      className="
-        w-120 h-50
-        bg-neutral-900 text-neutral-0
-        rounded-xl p-4
-        flex flex-col justify-between
-        shadow-xl
-      "
-    >
+    <div className="w-120 h-50 bg-neutral-900 text-neutral-0 rounded-xl p-4 flex flex-col justify-between shadow-xl">
       <h3 className="text-lg font-semibold">Typing Speed Test</h3>
 
       <div className="grid grid-cols-3 gap-4 items-center">
