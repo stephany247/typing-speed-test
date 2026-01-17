@@ -9,6 +9,7 @@ type ResultsProps = {
   isFirstTest: boolean;
   isNewHighScore: boolean;
   onRestart: () => void;
+  onShare: () => void;
 };
 
 export default function Results({
@@ -19,6 +20,7 @@ export default function Results({
   isFirstTest,
   isNewHighScore,
   onRestart,
+  onShare,
 }: ResultsProps) {
   let heading = "Test Complete!";
   let message = "Solid run. Keep pushing to beat your high score.";
@@ -100,12 +102,21 @@ export default function Results({
       </div>
 
       {/* Action */}
-      <button
-        onClick={onRestart}
-        className="mt-4 px-4 py-2.5 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-neutral-0/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 cursor-pointer"
-      >
-        Go Again <img src="/images/icon-undo.svg" alt="Undo icon" />
-      </button>
+      <div className="flex items-center gap-x-4 gap-y-2 justify-center w-full flex-wrap">
+        <button
+          onClick={onRestart}
+          className="mt-4 px-4 py-2.5 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-neutral-0/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 items-center justify-center cursor-pointer w-43"
+        >
+          Go Again <img src="/images/icon-undo.svg" alt="Undo icon" />
+        </button>
+        <button
+          onClick={onShare}
+          className="mt-4 px-4 py-2.5 rounded-xl bg-blue-500 text-neutral-0 font-semibold hover:bg-blue-400/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 items-center justify-center cursor-pointer w-43"
+        >
+          Share Result
+          <img src="/images/icon-share.svg" alt="Share icon" className="size-5" />
+        </button>
+      </div>
       {!isNewHighScore && (
         <img
           src="/images/pattern-star-1.svg"

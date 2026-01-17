@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Controls from "./components/Controls";
 import type {
@@ -13,6 +13,8 @@ import { calculateStats } from "./utils/calculateStats";
 import Results from "./components/Results";
 import { getBestWpm, saveResult } from "./utils/storage";
 import HistoryDialog from "./components/HistoryDialog";
+import { ResultCard } from "./components/ResultCard";
+import { toPng } from "html-to-image";
 
 export type ModeConfig =
   | { mode: "timed"; duration: number }
@@ -32,6 +34,7 @@ function App() {
   );
   const [showHistory, setShowHistory] = useState(false);
   const [category, setCategory] = useState<Category>("general");
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const text = passage?.text;
   const {
@@ -114,6 +117,17 @@ function App() {
     }
   }, [isFinished]);
 
+  const handleShare = async () => {
+    if (!cardRef.current) return;
+
+    const dataUrl = await toPng(cardRef.current);
+
+    const link = document.createElement("a");
+    link.download = "typing-result.png";
+    link.href = dataUrl;
+    link.click();
+  };
+
   return (
     <>
       {showHistory && <HistoryDialog onClose={() => setShowHistory(false)} />}
@@ -158,8 +172,23 @@ function App() {
           isFirstTest={resultFlags.isFirstTest}
           isNewHighScore={resultFlags.isNewHighScore}
           onRestart={handleRestart}
+          onShare={handleShare}
         />
       )}
+
+      <div className="absolute -left-[9999px]">
+        <div ref={cardRef}>
+          <ResultCard
+            wpm={stats.wpm}
+            accuracy={stats.accuracy}
+            difficulty={difficulty}
+            category={category}
+            mode={modeConfig}
+            totalTyped={typed.length}
+            errorCount={accuracyErrors.length}
+          />
+        </div>
+      </div>
     </>
   );
 }

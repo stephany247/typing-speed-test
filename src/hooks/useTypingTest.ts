@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-type Config =
+export type Config =
     | { mode: "timed"; duration: number }
     | { mode: "passage" }
 
@@ -38,34 +38,34 @@ export function useTypingTest(text: string, config: Config) {
     }
 
     const handleCharInput = (char: string) => {
-        if (!isTesting) setIsTesting(true);
+  if (!isTesting) setIsTesting(true);
 
-        if (char === "BACKSPACE") {
-            setTyped(prev => prev.slice(0, -1));
-            return;
-        }
+  if (char === "BACKSPACE") {
+  setTyped(prev => prev.slice(0, -1));
+  return;
+}
 
 
-        setTyped(prev => {
-            const index = prev.length;
-            const isCorrect = char === text[index];
+  setTyped(prev => {
+    const index = prev.length;
+    const isCorrect = char === text[index];
 
-            setAccuracyHistory(hist => {
-                if (hist[index] !== undefined) return hist;
-                const next = [...hist];
-                next[index] = isCorrect;
-                return next;
-            });
+    setAccuracyHistory(hist => {
+      if (hist[index] !== undefined) return hist;
+      const next = [...hist];
+      next[index] = isCorrect;
+      return next;
+    });
 
-            setAccuracyErrors(errs => {
-                if (isCorrect) return errs;
-                if (errs.includes(index)) return errs;
-                return [...errs, index];
-            });
+    setAccuracyErrors(errs => {
+      if (isCorrect) return errs;
+      if (errs.includes(index)) return errs;
+      return [...errs, index];
+    });
 
-            return prev + char;
-        });
-    };
+    return prev + char;
+  });
+};
 
 
     // typing logic F
