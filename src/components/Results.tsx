@@ -24,14 +24,17 @@ export default function Results({
 }: ResultsProps) {
   let heading = "Test Complete!";
   let message = "Solid run. Keep pushing to beat your high score.";
+  let buttonText = "Go Again";
 
   if (isFirstTest) {
     heading = "Baseline Established!";
     message =
       "You’ve set the bar. Now the real challenge begins—time to beat it.";
+    buttonText = "Beat this scrore";
   } else if (isNewHighScore) {
     heading = "High Score Smashed!";
     message = "You’re getting faster. That was incredible typing.";
+    buttonText = "Beat this scrore";
   }
 
   return (
@@ -111,19 +114,19 @@ export default function Results({
       </div>
 
       {/* Action */}
-      <div className="flex items-center gap-x-4 gap-y-2 justify-center w-full flex-wrap">
+      <div className="inline-grid md:grid-cols-2 gap-x-4 max-w-lg gap-y-2 justify-center w-full pb-12 md:pb-20 lg:pb-16">
         <button
           type="button"
           onClick={onRestart}
-          className="mt-4 px-4 py-2.5 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-neutral-0/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 items-center justify-center cursor-pointer w-43"
+          className="mt-4 px-4 py-2.5 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-neutral-0/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out flex-1 inline-flex gap-2 items-center justify-center cursor-pointer"
         >
-          Go Again{" "}
+          {buttonText}
           <img src="/images/icon-undo.svg" alt="Undo icon" aria-hidden="true" />
         </button>
         <button
           type="button"
           onClick={onShare}
-          className="mt-4 px-4 py-2.5 rounded-xl bg-blue-500 text-neutral-0 font-semibold hover:bg-blue-400/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 items-center justify-center cursor-pointer w-43"
+          className="mt-4 px-4 py-2.5 rounded-xl bg-blue-500 text-neutral-0 font-semibold hover:bg-blue-400/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out flex-1 inline-flex gap-2 items-center justify-center cursor-pointer"
         >
           Share Result
           <img
