@@ -12,7 +12,11 @@ export default function OptionGroup({
   disabled,
 }: OptionGroupProps) {
   return (
-    <div className="flex gap-2 text-sm">
+    <div
+      role="radiogroup"
+      aria-disabled={disabled ? "true" : "false"}
+      className="flex gap-2 text-sm"
+    >
       {options.map((option) => {
         const isActive = option === value;
 
@@ -20,6 +24,9 @@ export default function OptionGroup({
           <button
             key={option}
             type="button"
+            role="radio"
+            aria-checked={isActive ? "true" : "false"}
+            disabled={disabled}
             onClick={() => {
               if (disabled) return;
               onSelect(option);

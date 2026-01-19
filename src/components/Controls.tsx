@@ -34,13 +34,16 @@ export default function Controls({
   return (
     <header className="flex flex-col gap-4 mt-8 lg:flex-row lg:justify-between lg:gap-6 lg:flex-wrap">
       <div className="grid grid-cols-3 items-center justify-center divide-x divide-neutral-700 md:flex md:justify-start">
-        <div className="flex flex-col items-center md:flex-row md:gap-4 md:pr-6">
-          <p className="text-neutral-400 md:text-lg">WPM:</p>
+        <div
+          aria-live="polite"
+          className="flex flex-col items-center md:flex-row md:gap-4 md:pr-6"
+        >
+          <span className="text-neutral-400 md:text-lg">WPM:</span>
           <p className="text-xl font-semibold md:text-2xl">{wpm}</p>
         </div>
 
         <div className="flex flex-col items-center md:flex-row md:gap-4 md:px-6">
-          <p className="text-neutral-400 md:text-lg">Accuracy:</p>
+          <span className="text-neutral-400 md:text-lg">Accuracy:</span>
           <p
             className={`text-xl font-semibold md:text-2xl ${
               accuracy < 100 ? "text-red-500" : "text-neutral-0"
@@ -51,8 +54,11 @@ export default function Controls({
         </div>
 
         <div className="flex flex-col items-center md:flex-row md:gap-4 md:pl-6">
-          <p className="text-neutral-400 md:text-lg">Time:</p>
+          <span className="text-neutral-400 md:text-lg">Time:</span>
           <p
+            aria-label={`Time remaining ${Math.floor(time / 60)} minutes ${
+              time % 60
+            } seconds`}
             className={`text-xl font-semibold md:text-2xl transition-colors duration-200 ease-in-out ${
               modeConfig.mode === "timed" && time < 10
                 ? "text-red-500"
@@ -67,7 +73,7 @@ export default function Controls({
       </div>
       <div className="hidden md:flex flex-col md:flex-row md:flex-wrap md:gap-y-4 divide-x divide-neutral-700">
         <div className="flex items-center gap-2 pr-4">
-          <p className="text-neutral-400">Difficulty:</p>
+          <span className="text-neutral-400">Difficulty:</span>
           <OptionGroup
             value={difficulty}
             options={["easy", "medium", "hard"]}
@@ -80,7 +86,7 @@ export default function Controls({
         </div>
 
         <div className="flex items-center gap-2 px-4">
-          <p className="text-neutral-400">Category:</p>
+          <span className="text-neutral-400">Category:</span>
           <OptionGroup
             value={category}
             options={["general", "quotes", "lyrics", "code"]}
@@ -141,9 +147,7 @@ export default function Controls({
 
         <Dropdown
           value={
-            modeConfig.mode === "timed"
-              ? `${modeConfig.duration}s`
-              : "Passage"
+            modeConfig.mode === "timed" ? `${modeConfig.duration}s` : "Passage"
           }
           options={MODE_OPTIONS.map((o) => o.mdLabel)}
           onSelect={(label) => {

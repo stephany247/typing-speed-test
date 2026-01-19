@@ -37,7 +37,12 @@ export default function HistoryDialog({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/70 z-50 flex md:items-center md:justify-center">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="history-title"
+      className="fixed inset-0 bg-black/70 z-50 flex md:items-center md:justify-center"
+    >
       <div
         className="
     bg-neutral-900 p-6 pt-4
@@ -53,7 +58,7 @@ export default function HistoryDialog({ onClose }: { onClose: () => void }) {
         </button>
 
         <div className="flex justify-between mb-4">
-          <h2 className="text-xl font-semibold">Result History</h2>
+          <h2 id="history-title" className="text-xl font-semibold">Result History</h2>
           <div className="flex gap-4 items-center">
             <button
               onClick={handleClearAll}

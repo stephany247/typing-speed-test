@@ -36,6 +36,9 @@ export default function Results({
 
   return (
     <section
+      role="region"
+      aria-labelledby="results-heading"
+      aria-live="polite"
       className={`flex flex-col items-center text-center gap-6  ${
         isNewHighScore ? "my-12 md:my-20 lg:my-16" : "mt-12 md:mt-20 lg:mt-16"
       }`}
@@ -45,7 +48,8 @@ export default function Results({
         {isNewHighScore ? (
           <img
             src="/images/icon-new-pb.svg"
-            alt="icon completed"
+            alt="New personal best achieved"
+            aria-hidden="true"
             className="w-fit"
           />
         ) : (
@@ -58,6 +62,7 @@ export default function Results({
             <img
               src="/images/icon-completed.svg"
               alt="icon completed"
+              aria-hidden="true"
               className="relative z-10 w-fit"
             />
           </div>
@@ -66,13 +71,17 @@ export default function Results({
           <img
             src="/images/pattern-star-2.svg"
             alt=""
+            aria-hidden="true"
             className="absolute bottom-1/4 left-4 size-5"
           />
         )}
       </div>
       <div className="space-y-2.5 mt-8">
         {/* Heading */}
-        <h2 className="text-2xl font-semibold md:text-4xl md:font-bold">
+        <h2
+          id="results-heading"
+          className="text-2xl font-semibold md:text-4xl md:font-bold"
+        >
           {heading}
         </h2>
 
@@ -104,23 +113,32 @@ export default function Results({
       {/* Action */}
       <div className="flex items-center gap-x-4 gap-y-2 justify-center w-full flex-wrap">
         <button
+          type="button"
           onClick={onRestart}
           className="mt-4 px-4 py-2.5 rounded-xl bg-neutral-0 text-neutral-900 font-semibold hover:bg-neutral-0/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 items-center justify-center cursor-pointer w-43"
         >
-          Go Again <img src="/images/icon-undo.svg" alt="Undo icon" />
+          Go Again{" "}
+          <img src="/images/icon-undo.svg" alt="Undo icon" aria-hidden="true" />
         </button>
         <button
+          type="button"
           onClick={onShare}
           className="mt-4 px-4 py-2.5 rounded-xl bg-blue-500 text-neutral-0 font-semibold hover:bg-blue-400/90 focus:outline-2 focus:outline-offset-2 focus:outline-blue-400 transition-colors duration-200 ease-in-out inline-flex gap-2 items-center justify-center cursor-pointer w-43"
         >
           Share Result
-          <img src="/images/icon-share.svg" alt="Share icon" className="size-5" />
+          <img
+            src="/images/icon-share.svg"
+            alt="Share icon"
+            aria-hidden="true"
+            className="size-5"
+          />
         </button>
       </div>
       {!isNewHighScore && (
         <img
           src="/images/pattern-star-1.svg"
           alt=""
+          aria-hidden="true"
           className="self-end size-10"
         />
       )}

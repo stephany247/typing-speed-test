@@ -35,6 +35,9 @@ export default function Dropdown({
       <button
         type="button"
         disabled={disabled}
+        aria-describedby={disabled ? "controls-disabled-hint" : undefined}
+        aria-expanded={open ? "true" : "false"}
+        aria-haspopup="listbox"
         onClick={() => {
           if (disabled) return;
           setOpen((prev) => !prev);

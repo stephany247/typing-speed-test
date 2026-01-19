@@ -81,7 +81,8 @@ export default function Passage({
         autoCorrect="off"
         autoCapitalize="off"
         spellCheck={false}
-        aria-label="Typing input"
+        aria-label="Typing input. Start typing to begin the test."
+        aria-describedby="typing-instructions"
         className="fixed top-0 left-0 opacity-0"
         onInput={handleMobileInput}
       />
@@ -96,6 +97,7 @@ export default function Passage({
         >
           {/* highlight */}
           <span
+            aria-hidden="true"
             className="absolute top-0 transition-transform duration-150 ease-linear bg-neutral-700 rounded-sm"
             style={{
               transform: `translate(${cursorStyle.x}px, ${cursorStyle.y}px)`,
@@ -103,6 +105,9 @@ export default function Passage({
               height: cursorStyle.height,
             }}
           />
+          <p id="typing-instructions" className="sr-only">
+            Type the following passage. Errors will be marked as you type.
+          </p>
 
           {/* text */}
           <p className="relative text-[2rem] tracking-[0.4px] leading-[150%] md:text-[2.5rem]">
@@ -131,7 +136,8 @@ export default function Passage({
         <div className="pt-6 flex justify-center border-t border-neutral-700">
           <button
             onClick={onRestart}
-            className="px-4 py-2.5 bg-neutral-800 rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2]"
+            aria-hidden="true"
+            className="px-4 py-2.5 bg-neutral-800 rounded-xl inline-flex items-center justify-center gap-2 text-lg font-semibold leading-[1.2] mb-4"
           >
             Restart Test{" "}
             <img src="/images/icon-restart.svg" alt="restart icon" />
@@ -148,7 +154,8 @@ export default function Passage({
           >
             Start Typing Test
           </button>
-          <p
+          <button
+            type="button"
             onClick={() => {
               onStart();
               inputRef.current?.focus();
@@ -156,7 +163,7 @@ export default function Passage({
             className="text-lg tracking-[0.4px] leading-[136%]"
           >
             Or click the text and start typing
-          </p>
+          </button>
         </div>
       )}
     </div>

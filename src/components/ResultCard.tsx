@@ -20,8 +20,15 @@ export function ResultCard({
   errorCount,
 }: ResultCardProps) {
   return (
-    <div className="w-120 h-50 bg-neutral-900 text-neutral-0 rounded-xl p-4 flex flex-col justify-between shadow-xl">
-      <h3 className="text-lg font-semibold">Typing Speed Test</h3>
+    <div
+      role="region"
+      aria-labelledby="results-heading"
+      aria-live="polite"
+      className="w-120 h-50 bg-neutral-900 text-neutral-0 rounded-xl p-4 flex flex-col justify-between shadow-xl"
+    >
+      <h3 id="results-heading" className="text-lg font-semibold">
+        Typing Speed Test
+      </h3>
 
       <div className="grid grid-cols-3 gap-4 items-center">
         <div className="flex flex-col gap-1 justify-center">
@@ -40,6 +47,10 @@ export function ResultCard({
             <span className="text-red-500">{errorCount}</span>
           </span>
         </div>
+        <p className="sr-only">
+          Your result is {wpm} words per minute with {accuracy} percent
+          accuracy.
+        </p>
       </div>
 
       <div className="text-sm text-blue-400 grid grid-cols-3 gap-4 items-center">

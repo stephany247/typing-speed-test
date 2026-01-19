@@ -11,6 +11,12 @@ export default function Confetti({ fire }: ConfettiProps) {
   useEffect(() => {
     if (!fire || !confettiRef.current) return;
 
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (prefersReducedMotion) return;
+
     confettiRef.current({
       particleCount: 1200,
       angle: 90,
@@ -27,6 +33,7 @@ export default function Confetti({ fire }: ConfettiProps) {
       onInit={({ confetti }) => {
         confettiRef.current = confetti;
       }}
+      aria-hidden="true"
       className="fixed inset-0 pointer-events-none w-full mx-auto"
     />
   );

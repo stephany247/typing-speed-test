@@ -55,6 +55,7 @@ Users should be able to:
 
 ```bash
 git clone https://github.com/stephany247/typing-speed-test.git
+
 cd typing-speed-test
 ```
 
